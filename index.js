@@ -11,13 +11,17 @@ const app = express()
 const port = 3000
 const cors = require('cors')
 const db = require('./lib/data')
-// const helpers = require('.lib/helpers')
+const helpers = require('./lib/helpers')
 
 app.use(cors());
 app.get('/user/:userEmail', (req, res) => {
   db.getUser(req.params.userEmail).then(user => {
     res.send(JSON.stringify(user))
   })
+})
+
+app.get('/mail', (req, res) => {
+  helpers.sendEmail("pawel.kopycki@komtech.eu", "eeeeeeeeee")
 })
 
 
