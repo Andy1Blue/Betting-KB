@@ -16,23 +16,40 @@ const helpers = require('./lib/helpers')
 app.use(cors());
 //test
 app.get('/:userEmail', (req, res) => {
-  db.test('register', 'user_email', req.params.userEmail).then(user => {
+  db.get('register', 'user_email', req.params.userEmail).then(user => {
     res.send(JSON.stringify(user))
   }).catch(err => res.send())
 })
 
 //get user
-app.get('/user/:userEmail', (req, res) => {
-  db.getUser('user', 'user_email', req.params.userEmail).then(user => {
+app.get('/register/:key', (req, res) => {
+  db.get('register', 'user_key', req.params.key).then(user => {
     res.send(JSON.stringify(user))
-  })
+  }).catch(err => res.send(err))
 })
 
 //get register
-app.get('/register/:userEmail', (req, res) => {
-  db.getUser('register', 'user_email', req.params.userEmail).then(user => {
-    res.send(JSON.stringify(user))
-  }).catch(err => res.send(err))
+app.post('/register', (req, res) => {
+  req.on('data', data => {
+    let user = JSON.parse(Buffer.from(data).toString())
+    // user.ip = "4";
+    // console.log(user)
+    db.register(user).then(user => {
+      res.writeHead(200, {
+        'Content-Type': 'application/json'
+      })
+      // console.log(user)
+      res.write(JSON.stringify(user))
+      res.end()
+    }).catch(err => {
+      res.writeHead(200, {
+        'Content-Type': 'application/json'
+      })
+      // console.log(err)
+      res.write(JSON.stringify(err))
+      res.end()
+    })
+  })
 })
 
 //testing helpers.sendmail
