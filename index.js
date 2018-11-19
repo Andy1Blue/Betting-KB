@@ -21,9 +21,9 @@ app.get('/:userEmail', (req, res) => {
   }).catch(err => res.send())
 })
 
-//get user
+//adding a verified user
 app.get('/register/:key', (req, res) => {
-  db.get('register', 'user_key', req.params.key).then(user => {
+  db.addVerifiedUser(req.params.key).then(user => {
     res.send(JSON.stringify(user))
   }).catch(err => res.send(err))
 })
@@ -32,7 +32,7 @@ app.get('/register/:key', (req, res) => {
 app.post('/register', (req, res) => {
   req.on('data', data => {
     let user = JSON.parse(Buffer.from(data).toString())
-    // user.ip = "4";
+    user.ip = req.connection.remoteAddress;
     // console.log(user)
     db.register(user).then(user => {
       res.writeHead(200, {
