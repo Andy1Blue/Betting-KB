@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+      table {
+          font-family: arial, sans-serif;
+          border-collapse: collapse;
+          width: 100%;
+      }
+      
+      td, th {
+          border: 1px solid #dddddd;
+          text-align: left;
+          padding: 8px;
+      }
+      
+      tr:nth-child(even) {
+          background-color: #dddddd;
+      }
+      </style>
+</head>
+<body>
+    <form action="" method="POST">
+       
+        Email:<br>
+        <input type="email" id="email" value="">
+        <br>
+        Password:<br>
+        <input type="password" id="password" value="">
+        <br><br>
+        <!-- <input type="submit" value="Submit"> -->
+      </form> 
+      <button class="login_button">Login</button>
+
+      <form>
+        Email:<br>
+        <input type="email" id="email1" value="">
+        <br>
+      </form>
+      <button class="search_button">Logout</button>
+  <script>
+    // let cyc = ''
+    // fetch('http://localhost:3000/login', {headers: {cyc}}).then(data => data.json()).then(data => {console.log(data); cyc = data.cyc})
+    // fetch('http://localhost:3000').then(data => data.json()).then((logs) => {
+    //   console.log(logs)
+    //   let body = document.querySelector('body');
+    //   if(!logs.err) {
+
+    //     let tab = document.createElement('table')
+    //     let keys = Object.keys(logs[0]);
+    //     let trh = document.createElement('tr')
+    //     for(let key of keys) {
+    //       let th = document.createElement('th')
+    //       th.innerHTML = key
+    //       trh.appendChild(th)
+  
+    //     }
+    //     tab.appendChild(trh)
+    //     for(let log of logs){
+  
+    //       let tr = document.createElement('tr')
+    //       let id = document.createElement('td')
+    //       id.innerHTML = log.id
+    //       let user = document.createElement('td')
+    //       user.innerHTML = log.user
+    //       let age = document.createElement('td')
+    //       age.innerHTML = log.age
+    //       let weight  = document.createElement('td')
+    //       weight.innerHTML = `<a href=http://onet.pl>${log.orders.length}</a>`
+    //       let ip = document.createElement('td')
+    //       ip.innerHTML = log.ip
+    //       let date = document.createElement('td')
+    //       date.innerHTML = log.date
+    //       tr.appendChild(id)
+    //       tr.appendChild(user)
+    //       tr.appendChild(age)
+    //       tr.appendChild(weight)
+    //       tr.appendChild(ip)
+    //       tr.appendChild(date)
+    //       tab.appendChild(tr)
+    //       body.appendChild(tab)
+    //     } 
+        
+        
+    //   } else {
+    //     body.innerHTML = "Coś nie gra"
+    //   }
+
+    // }).catch((data) => console.log(data))
+    sessionStorage.setItem('token', '')
+    if (!localStorage.token) {
+                localStorage.token = JSON.stringify([]);
+            }
+    
+    // console.log(ses)
+    let obj = {  
+      userName: "pkopy",
+      userEmail: "pkopy@onet.pl",
+      password: "pkopy7603"
+    }
+    test = (data) => {
+      console.log('fff')
+      var xmlhttp = new XMLHttpRequest();
+      xmlhttp.open("POST","http://localhost:3000/add");
+      xmlhttp.setRequestHeader('Content-Type', 'application/json');
+      xmlhttp.send(JSON.stringify(data))
+
+    }
+
+    kot = (obj) => {
+      console.log(obj)
+    }
+    test2 = () => {
+      console.log(cyc)
+      fetch('http://localhost:3000/ccc', {headers: {cyc}}).then(data => data.text()).then(data => {console.log(data)})
+    }
+    test1 = (data) => {
+      
+      let ses = sessionStorage.getItem('token')
+      console.log(ses)
+      fetch("http://localhost:3000/login",
+        {
+          method: "POST", // *GET, POST, PUT, DELETE, etc.
+          mode: "cors", // no-cors, cors, *same-origin
+          cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+          credentials: "same-origin", // include, *same-origin, omit
+          headers: {
+              "Content-Type": "application/json; charset=utf-8",
+              sesion: ses
+              // "Content-Type": "application/x-www-form-urlencoded",
+          },
+          redirect: "follow", // manual, *follow, error
+          referrer: "no-referrer", // no-referrer, *client
+          body: JSON.stringify(data),
+        }
+      ).then(data => data.json()).then(data => {
+        console.log(data)
+        if(data.token) {
+          sessionStorage.setItem('token', data.token)
+
+        } 
+        
+
+
+      })
+    }
+    
+    
+
+    addUser = () => {
+      // let inputName = document.querySelector('#name');
+      let inputEmail = document.querySelector('#email');
+      let inputPassword = document.querySelector('#password');
+      let reg = /[\w+0-9._%+-]+@[\w+0-9.-]+\.[\w+]{2,3}/
+      // console.log(!reg.test(inputEmail.value))
+      if((inputEmail.value.length === 0 || inputPassword.value.length === 0) || !reg.test(inputEmail.value)) {
+        alert('uzupełnij')
+      }else{
+        user = {
+          // userName: inputName.value,
+          email: inputEmail.value,
+          password: inputPassword.value
+        }
+        test1(user)
+      }
+      // console.log(inputName.value)
+    }
+
+    getUser =() => {
+      let email = document.querySelector('#email1').value;
+      
+      fetch(`http://localhost:3000/user/${email}`).then(data => data.text()).then(data => {console.log(data)})
+    }
+
+    let loginButton = document.querySelector('.login_button')
+    loginButton.addEventListener('click', addUser)
+    let searchButton = document.querySelector('.search_button')
+    searchButton.addEventListener('click', ()=>localStorage.token = JSON.stringify([]))
+
+    // fetch('http://localhost:3000/user/Tadek').then((data) => data.json()).then((user) => console.log(user) )
+  </script>
+  
+  
+</body>
+</html>
