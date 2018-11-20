@@ -13,10 +13,12 @@ const cors = require('cors')
 const db = require('./lib/data')
 const helpers = require('./lib/helpers')
 
+let session = []
+
 app.use(cors());
 //test
 app.get('/:userEmail', (req, res) => {
-  db.get('register', 'user_email', req.params.userEmail).then(user => {
+  db.get('user', 'user_email', req.params.userEmail).then(user => {
     res.send(JSON.stringify(user))
   }).catch(err => res.send())
 })
@@ -28,7 +30,7 @@ app.get('/register/:key', (req, res) => {
   }).catch(err => res.send(err))
 })
 
-//get register
+//Register user
 app.post('/register', (req, res) => {
   req.on('data', data => {
     let user = JSON.parse(Buffer.from(data).toString())
@@ -57,22 +59,7 @@ app.get('/mail', (req, res) => {
   helpers.sendEmail("pawel.kopycki@komtech.eu", "eeeeeeeeee")
 })
 
-//testing register
-app.get('/register', (req, res) => {
-  let user = {
-    name: 'test24ssss',
-    email: 'test11@test.pl',
-    password: '123456789',
-    ip: req.connection.remoteAddress,
 
-  }
-  db.register(user).then(data => {
-    res.send(JSON.stringify(data))
-  }).catch(err => res.send())
-    
-  
-  
-})
 
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
