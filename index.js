@@ -10,117 +10,131 @@ const express = require('express')
 const app = express()
 const port = 3000
 const cors = require('cors')
-const db = require('./lib/data')
+const db = require('./lib/db')
 const helpers = require('./lib/helpers')
 
 let session = []
 
 app.use(cors());
-//test
-// app.get('/:userEmail', (req, res) => {
-//   db.get('user', 'user_email', req.params.userEmail).then(user => {
-//     res.send(JSON.stringify(user))
-//   }).catch(err => res.send())
-// })
 
-//adding a verified user
-app.get('/register/:key', (req, res) => {
-  db.addVerifiedUser(req.params.key).then(user => {
-    res.send(JSON.stringify(user));
-  }).catch(err => res.send(err));
-});
+//Required data: name, email, password
+app.post('/register', (req, res) => {
+  req.on('data', (data) => {
+    let payload = Buffer.from(data).toString();
+    const payloadObject = helpers.parseJsonToObject(payload);
+    const name = typeof(payloadObject.name) == 'string' && payloadObject.name.trim().length > 0 ? payloadObject.name.trim() : false;
+    const email = typeof(payloadObject.email) == 'string' && payloadObject.email.trim().length > 0  && /[\w+0-9._%+-]+@[\w+0-9.-]+\.[\w+]{2,3}/.test(payloadObject.email.trim()) ? payloadObject.email.trim() : false;
+    const password = typeof(payloadObject.password) == 'string' && payloadObject.password.trim().length > 5 ? payloadObject.password.trim() : false;
 
-//Login
+    if (name && email && password) {
 
-app.post('/login', (req, res) => {
-  req.on('data', data => {
-    let user = JSON.parse(Buffer.from(data).toString())
-    let password = helpers.hash(user.password)
-    db.get('user', 'user_email', user.email).then(userFromDb => {
-      console.log('email: ' + user.email)
-      console.log('pass: ' + password)
-      if(Array.isArray(userFromDb) && userFromDb[0].user_email === user.email && userFromDb[0].user_password ===  password){
-        let token = helpers.createRandomString(10)
-        let ses = {}
-        console.log(req.headers.sesion)
-        if(req.headers.sesion !== '') {
-          let x = session.filter(ses => ses.token === req.headers.sesion);
-          console.log(x)
-          res.send(session)
-        } else {
-          ses= {
-            userName : userFromDb[0].user_name,
-            token : token,
-            ip:req.connection.remoteAddress,
-            date: Date.now()
+      db.read('user', 'email', email)
+        .then(() => {
+          res.writeHead(403, {
+            'Content-Type': 'application/json'
+          });
+          res.write(JSON.stringify({'Error' : 'This email address is already exist'}))
+          res.end()
+        })
+        .catch(() => {
+          const hashedPassword = helpers.hash(password);
+          const userKey =  helpers.createRandomString(30);
+          const date = Date.now();
+          const user = {
+            name,
+            email,
+            password : hashedPassword,
+            ip : req.connection.remoteAddress,
+            userKey,
+            date
           }
-          
-          session.push(ses)
-            res.send(ses)
+          db.read('register', 'ip', user.ip)
+            .then(data => {
+              // console.log(data)
+              if (Array.isArray(data) && Date.now() - data[0].date < 10000) {
+                res.writeHead(403, {
+                  'Content-Type': 'application/json'
+                });
+                res.write(JSON.stringify({'Message' : 'You must wait a moment'}));
+                res.end();
+              } else {
+                if(Array.isArray(data) && data[0]) {
+                  // console.log(data)
+                  db.delete('register', 'id', data[0].id).catch(data => console.log(data));
+                  db.create('register', user)
+                    .then(data => {
+                      // helpers.sendEmail(email, userKey);
+                      
+                      res.writeHead(200, {
+                        'Content-Type': 'application/json'
+                      });
+                      res.write(JSON.stringify({'InsertId' : data.insertId}));
+                      res.end();
+                    })
+                    .catch(data => {
+                      res.writeHead(403, {
+                        'Content-Type': 'application/json'
+                      });
+                      res.write(JSON.stringify({ 'Error': data }));
+                      res.end();
+                    });
+                }
 
-        }
-        
-        // res.send({dir : })
-
-      }else {
-        res.send({err : 'hhhh'})
-      }
-    });
+              }
+            })
+            .catch(data => {
+              db.create('register', user)
+                .then(data => {
+                  // helpers.sendEmail(email, userKey);
+                  
+                  res.writeHead(200, {
+                    'Content-Type': 'application/json'
+                  });
+                  res.write(JSON.stringify({'InsertId' : data.insertId}));
+                  res.end();
+                })
+                .catch(data => {
+                  res.writeHead(403, {
+                    'Content-Type': 'application/json'
+                  });
+                  res.write(JSON.stringify({ 'Error': data }));
+                  res.end();
+                });
+            })
+        });
+      
+    } else {
+      res.writeHead(403, {
+        'Content-Type': 'application/json'
+      });
+      res.write(JSON.stringify({'Error' : 'Missing required field(s)'}))
+      res.end()
+    }
   });
 });
 
-//Register user
-app.post('/register', (req, res) => {
-  req.on('data', data => {
-    let user = JSON.parse(Buffer.from(data).toString())
-    user.ip = req.connection.remoteAddress;
-    // console.log(user)
-    db.register(user).then(user => {
-      res.writeHead(200, {
-        'Content-Type': 'application/json'
+app.get('/test', (req, res) => {
+  db.read('competition', 'id', 1)
+    .then(data => {
+      db.read('match_', 'id_comp', 1)
+        .then((dataMatch) => {
+          
+        let obj = data[0];
+        obj.matches = dataMatch;
+        res.writeHead(200, {
+          'Content-Type': 'application/json'
+        });
+        res.write(JSON.stringify(obj))
+        res.end()
       })
-      // console.log(user)
-      res.write(JSON.stringify(user))
-      res.end()
-    }).catch(err => {
-      res.writeHead(200, {
-        'Content-Type': 'application/json'
-      })
-      // console.log(err)
-      res.write(JSON.stringify(err))
-      res.end()
+      .catch(() => {
+        res.writeHead(200, {
+          'Content-Type': 'application/json'
+        });
+        res.write(JSON.stringify(data))
+        res.end()
+      });
     })
-  })
-})
-
-//testing helpers.sendmail
-app.get('/mail', (req, res) => {
-  helpers.sendEmail("pawel.kopycki@komtech.eu", "eeeeeeeeee")
-})
-
-app.get('/', (req, res) => {
-  let token = helpers.createRandomString(10)
-  let ses = {}
-  // console.log(req.headers)
-  if(req.headers.sesion) {
-    let x = session.filter(ses => ses.token === req.headers.sesion);
-    console.log(x)
-    res.send(x)
-  } else {
-    ses= {
-      token : token,
-      ip:req.connection.remoteAddress,
-      date: Date.now()
-    }
-    
-    session.push(ses)
-      res.send(ses)
-
-  }
-  
-  // console.log(session)
-  })
-  
-
-
+    .catch(err => console.log(err))
+});
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
