@@ -4,7 +4,6 @@
  *
  */
 
-
 //Dependencies
 const express = require('express');
 const app = express();
@@ -172,7 +171,8 @@ app.post('/login', (req, res) => {
           const tokenObject = {
             email,
             id : tokenId,
-            expires
+            expires,
+            accessLevel: dataUser[0].access
           };
 
           //Store the token
@@ -304,7 +304,7 @@ app.get('/user', (req, res) => {
           })
           .catch(() => {
             userObj.bets = []
-            helpers.response(res, 200, userObj);
+            helpers.response(res, 200, userObj)
           })
         })
         .catch(() => {
