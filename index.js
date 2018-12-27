@@ -200,7 +200,7 @@ app.post('/login', (req, res) => {
           res.end()
         }
       })
-      .catch()
+      .catch(err => console.log(err))
     } else {
       res.writeHead(403, {
         'Content-Type': 'application/json'
@@ -291,17 +291,18 @@ app.get('/user', (req, res) => {
       if (tokenIsValid) {
         db.read('user', 'email', email)
         .then(dataUser => {
+          const userObj = {
+            'name' : dataUser[0].name,
+            'email' : dataUser[0].email,
+          }
           db.read('bet', 'id_user', dataUser[0].id)
           .then(betsData => {
-            const userObj = {
-              'name' : dataUser[0].name,
-              'email' : dataUser[0].email,
-              'bets' : betsData
-            }
+            userObj.bets = betsData
             helpers.response(res, 200, userObj)
           })
           .catch(() => {
-            helpers.response(res, 403, {'Error' : 'Cannot read bets data'});
+            userObj.bets = 'Cannot read bets data'
+            helpers.response(res, 200, userObj);
           })
         })
         .catch(() => {
