@@ -200,7 +200,9 @@ app.post('/login', (req, res) => {
           res.end()
         }
       })
-      .catch(err => console.log(err))
+      .catch((err) => {
+        helpers.response(res, 403, {'Error' : 'This email does not exist'});
+      })
     } else {
       res.writeHead(403, {
         'Content-Type': 'application/json'
