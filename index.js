@@ -301,7 +301,7 @@ app.get('/user', (req, res) => {
             helpers.response(res, 200, userObj)
           })
           .catch(() => {
-            userObj.bets = 'Cannot read bets data'
+            userObj.bets = []
             helpers.response(res, 200, userObj);
           })
         })
