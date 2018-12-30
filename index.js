@@ -281,7 +281,7 @@ app.post('/bet', (req, res) => {
 
                   if (isBetExist) {
                     helpers.response(res, 403, {
-                      'Error': 'this bet already exist'
+                      'Error': 'This bet is already exist'
                     });
                   } else {
                     db.create('bet', dataBet)
