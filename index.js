@@ -371,4 +371,9 @@ app.all('/admin/getMatchs', (req, res) => {
   admin.getAllMatchs(req, res);
 });
 
+// Admin panel - get all competitons data
+app.all('/admin/getCompetitons', (req, res) => {
+  admin.getAllCompetition(req, res);
+});
+
 app.listen(config.port, () => console.log(`BETTING application starting on port: ${config.port}!`));
