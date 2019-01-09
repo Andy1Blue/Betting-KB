@@ -13,9 +13,14 @@ const _data = require('./lib/dataFs');
 const config = require('./config');
 const app = express();
 const bet = require('./lib/bet')
+const admin = require('./lib/admin')
 
 //Get /admin
-require('./lib/admin')(app);
+// require('./lib/admin')(app);
+
+app.all('/admin/getUsers', (req, res) => {
+  admin.getAllUsers(req, res);
+});
 
 let session = [];
 
