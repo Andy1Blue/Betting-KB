@@ -367,6 +367,11 @@ app.all('/admin/user', (req, res) => {
   admin.getAllUsers(req, res);
 });
 
+// Admin panel - add user
+app.all('/admin/addUser', (req, res) => {
+  admin.addUser(req, res);
+});
+
 // Admin panel - get all matchs data
 app.all('/admin/match', (req, res) => {
   admin.getAllMatchs(req, res);
