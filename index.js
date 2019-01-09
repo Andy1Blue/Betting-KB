@@ -362,23 +362,28 @@ app.get('/test/:id', (req, res) => {
 });
 
 // Admin panel - get all users data
-app.all('/admin/getUsers', (req, res) => {
+app.all('/admin/user', (req, res) => {
   admin.getAllUsers(req, res);
 });
 
 // Admin panel - get all matchs data
-app.all('/admin/getMatchs', (req, res) => {
+app.all('/admin/match', (req, res) => {
   admin.getAllMatchs(req, res);
 });
 
 // Admin panel - get all competitons data
-app.all('/admin/getCompetitons', (req, res) => {
+app.all('/admin/competiton', (req, res) => {
   admin.getAllCompetition(req, res);
 });
 
 // Admin panel - get all bets data
-app.all('/admin/getBets', (req, res) => {
+app.all('/admin/bet', (req, res) => {
   admin.getAllBets(req, res);
+});
+
+// Admin panel - get all registers data
+app.all('/admin/register', (req, res) => {
+  admin.getAllRegisters(req, res);
 });
 
 app.listen(config.port, () => console.log(`BETTING application starting on port: ${config.port}!`));
