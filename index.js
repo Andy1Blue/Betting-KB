@@ -367,7 +367,7 @@ app.all('/admin/user', (req, res) => {
   admin.getAllUsers(req, res);
 });
 
-// Admin panel - add user
+// Admin panel - add user (post)
 app.all('/admin/addUser', (req, res) => {
   admin.addUser(req, res);
 });
