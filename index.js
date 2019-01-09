@@ -15,14 +15,7 @@ const app = express();
 const bet = require('./lib/bet')
 const admin = require('./lib/admin')
 
-//Get /admin
-// require('./lib/admin')(app);
-
-app.all('/admin/getUsers', (req, res) => {
-  admin.getAllUsers(req, res);
-});
-
-let session = [];
+// let session = [];
 
 app.use(cors());
 app.use(express.static('public'));
@@ -366,6 +359,11 @@ app.get('/test/:id', (req, res) => {
       res.write(JSON.stringify(err))
       res.end()
     })
+});
+
+// Admin panel - get all users data
+app.all('/admin/getUsers', (req, res) => {
+  admin.getAllUsers(req, res);
 });
 
 app.listen(config.port, () => console.log(`BETTING application starting on port: ${config.port}!`));
