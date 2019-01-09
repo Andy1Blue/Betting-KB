@@ -38,6 +38,7 @@ app.post('/register', (req, res) => {
             'Content-Type': 'application/json'
           });
           res.write(JSON.stringify({
+            // TODO: Check it! All time is "This email address is already exist"
             'Error': 'This email address is already exist'
           }))
           res.end()
