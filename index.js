@@ -22,112 +22,67 @@ app.use(express.static('public'));
 
 //Required data: name, email, password
 app.post('/register', (req, res) => {
-
+  
   req.on('data', (data) => {
     let payload = Buffer.from(data).toString();
     const payloadObject = helpers.parseJsonToObject(payload);
-    const name = typeof (payloadObject.name) == 'string' && payloadObject.name.trim().length > 0 ? payloadObject.name.trim() : false;
-    const email = typeof (payloadObject.email) == 'string' && payloadObject.email.trim().length > 0 && /[\w+0-9._%+-]+@[\w+0-9.-]+\.[\w+]{2,3}/.test(payloadObject.email.trim()) ? payloadObject.email.trim() : false;
-    const password = typeof (payloadObject.password) == 'string' && payloadObject.password.trim().length > 5 ? payloadObject.password.trim() : false;
+    const name = typeof(payloadObject.name) == 'string' && payloadObject.name.trim().length > 0 ? payloadObject.name.trim() : false;
+    const email = typeof(payloadObject.email) == 'string' && payloadObject.email.trim().length > 0  && /[\w+0-9._%+-]+@[\w+0-9.-]+\.[\w+]{2,3}/.test(payloadObject.email.trim()) ? payloadObject.email.trim() : false;
+    const password = typeof(payloadObject.password) == 'string' && payloadObject.password.trim().length > 5 ? payloadObject.password.trim() : false;
 
     if (name && email && password) {
 
       db.read('user', 'email', email)
-        .then(() => {
-          res.writeHead(403, {
-            'Content-Type': 'application/json'
-          });
-          res.write(JSON.stringify({
-            // TODO: Check it! All time is "This email address is already exist"
-            'Error': 'This email address is already exist'
-          }))
-          res.end()
+        .then((exist) => {
+          helpers.response(res, 403, {'Error' : 'This email address is already exist'});
+        
         })
         .catch(() => {
           const hashedPassword = helpers.hash(password);
-          const userKey = helpers.createRandomString(30);
+          const userKey =  helpers.createRandomString(30);
           const date = Date.now();
           const user = {
             name,
             email,
-            password: hashedPassword,
-            ip: req.connection.remoteAddress,
+            password : hashedPassword,
+            ip : req.connection.remoteAddress,
             userKey,
             date
           }
           db.read('register', 'ip', user.ip)
             .then(data => {
-              // console.log(data)
               if (Array.isArray(data) && Date.now() - data[0].date < 10000) {
-                res.writeHead(403, {
-                  'Content-Type': 'application/json'
-                });
-                res.write(JSON.stringify({
-                  'Message': 'You must wait a moment'
-                }));
-                res.end();
+                helpers.response(res, 403, {'Message' : 'You must wait a moment'});
+                
               } else {
                 if (Array.isArray(data) && data[0]) {
-                  // console.log(data)
                   db.delete('register', 'id', data[0].id).catch(data => console.log(data));
                   db.create('register', user)
                     .then(data => {
                       helpers.sendEmail(email, userKey);
-
-                      res.writeHead(200, {
-                        'Content-Type': 'application/json'
-                      });
-                      res.write(JSON.stringify({
-                        'InsertId': data.insertId
-                      }));
-                      res.end();
+                      helpers.response(res, 200, {'InsertId' : data.insertId});
                     })
                     .catch(data => {
-                      res.writeHead(403, {
-                        'Content-Type': 'application/json'
-                      });
-                      res.write(JSON.stringify({
-                        'Error': data
-                      }));
-                      res.end();
+                      helpers.response(res, 403, {'Error': data });
                     });
+                  }
+                  
                 }
-
-              }
-            })
-            .catch(() => {
-              db.create('register', user)
+              })
+              .catch(() => {
+                db.create('register', user)
                 .then(data => {
                   helpers.sendEmail(email, userKey);
-
-                  res.writeHead(200, {
-                    'Content-Type': 'application/json'
-                  });
-                  res.write(JSON.stringify({
-                    'InsertId': data.insertId
-                  }));
-                  res.end();
+                  helpers.response(res, 200, {'InsertId' : data.insertId});
                 })
                 .catch(data => {
-                  res.writeHead(403, {
-                    'Content-Type': 'application/json'
-                  });
-                  res.write(JSON.stringify({
-                    'Error': data
-                  }));
-                  res.end();
+                  helpers.response(res, 403, {'Error': data });
                 });
             });
         });
-
+      
     } else {
-      res.writeHead(403, {
-        'Content-Type': 'application/json'
-      });
-      res.write(JSON.stringify({
-        'Error': 'Missing required field(s)'
-      }))
-      res.end()
+      helpers.response(res, 403, {'Error' : 'Missing required field(s)'});
     }
   });
 });
