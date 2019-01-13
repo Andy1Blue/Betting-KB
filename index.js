@@ -22,7 +22,7 @@ app.use(express.static('public'));
 
 //Required data: name, email, password
 app.post('/register', (req, res) => {
-  
+
   req.on('data', (data) => {
     let payload = Buffer.from(data).toString();
     const payloadObject = helpers.parseJsonToObject(payload);
@@ -35,7 +35,7 @@ app.post('/register', (req, res) => {
       db.read('user', 'email', email)
         .then((exist) => {
           helpers.response(res, 403, {'Error' : 'This email address is already exist'});
-        
+
         })
         .catch(() => {
           const hashedPassword = helpers.hash(password);
@@ -53,7 +53,7 @@ app.post('/register', (req, res) => {
             .then(data => {
               if (Array.isArray(data) && Date.now() - data[0].date < 10000) {
                 helpers.response(res, 403, {'Message' : 'You must wait a moment'});
-                
+
               } else {
                 if (Array.isArray(data) && data[0]) {
                   db.delete('register', 'id', data[0].id).catch(data => console.log(data));
@@ -66,7 +66,7 @@ app.post('/register', (req, res) => {
                       helpers.response(res, 403, {'Error': data });
                     });
                   }
-                  
+
                 }
               })
               .catch(() => {
@@ -80,7 +80,7 @@ app.post('/register', (req, res) => {
                 });
             });
         });
-      
+
     } else {
       helpers.response(res, 403, {'Error' : 'Missing required field(s)'});
     }
@@ -318,32 +318,32 @@ app.get('/test/:id', (req, res) => {
 });
 
 // Admin panel - get all users data
-app.all('/admin/user', (req, res) => {
+app.get('/admin/user', (req, res) => {
   admin.getAllUsers(req, res);
 });
 
 // Admin panel - add user (post)
-app.all('/admin/addUser', (req, res) => {
+app.post('/admin/user', (req, res) => {
   admin.addUser(req, res);
 });
 
 // Admin panel - get all matchs data
-app.all('/admin/match', (req, res) => {
+app.get('/admin/match', (req, res) => {
   admin.getAllMatchs(req, res);
 });
 
 // Admin panel - get all competitons data
-app.all('/admin/competiton', (req, res) => {
+app.get('/admin/competiton', (req, res) => {
   admin.getAllCompetition(req, res);
 });
 
 // Admin panel - get all bets data
-app.all('/admin/bet', (req, res) => {
+app.get('/admin/bet', (req, res) => {
   admin.getAllBets(req, res);
 });
 
 // Admin panel - get all registers data
-app.all('/admin/register', (req, res) => {
+app.get('/admin/register', (req, res) => {
   admin.getAllRegisters(req, res);
 });
 
