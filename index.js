@@ -322,6 +322,12 @@ app.get('/admin/user', (req, res) => {
   admin.getAllUsers(req, res);
 });
 
+// Admin panel - get user with :userId
+app.get('/admin/user/:userId', (req, res) => {
+  const userId = req.params.userId;
+  admin.getUser(req, res, userId);
+});
+
 // Admin panel - add user (post)
 app.post('/admin/user', (req, res) => {
   admin.addUser(req, res);
