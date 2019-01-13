@@ -327,6 +327,11 @@ app.post('/admin/user', (req, res) => {
   admin.addUser(req, res);
 });
 
+// Admin panel - delete user (delete)
+app.delete('/admin/user', (req, res) => {
+  admin.deleteUser(req, res);
+});
+
 // Admin panel - get all matchs data
 app.get('/admin/match', (req, res) => {
   admin.getAllMatchs(req, res);
