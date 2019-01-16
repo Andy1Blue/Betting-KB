@@ -317,6 +317,9 @@ app.get('/test/:id', (req, res) => {
     })
 });
 
+// Admin routes
+require('./lib/admin.routes')(app);
+
 // Admin panel - get all users data
 app.get('/admin/user', (req, res) => {
   admin.getAllUsers(req, res);
