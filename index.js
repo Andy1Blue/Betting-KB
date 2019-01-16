@@ -12,8 +12,7 @@ const helpers = require('./lib/helpers');
 const _data = require('./lib/dataFs');
 const config = require('./config');
 const app = express();
-const bet = require('./lib/bet')
-const admin = require('./lib/admin')
+const bet = require('./lib/bet');
 
 // let session = [];
 
