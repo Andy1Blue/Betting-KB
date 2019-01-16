@@ -317,6 +317,6 @@ app.get('/test/:id', (req, res) => {
 });
 
 // Admin routes
-require('./lib/admin.routes')(app);
+require('./lib/admin/admin.routes')(app);
 
 app.listen(config.port, () => console.log(`BETTING application starting on port: ${config.port}!`));
