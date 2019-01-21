@@ -13,11 +13,24 @@ const _data = require('./lib/dataFs');
 const config = require('./config');
 const app = express();
 const bet = require('./lib/bet');
+const workers = require('./lib/workers');
+//const reactServer = require('./lib/react')
 
 // let session = [];
 
 app.use(cors());
 app.use(express.static('public'));
+
+//Init function
+app.init = () => {
+  // reactServer.init();
+
+  //Start the workers
+  workers.init();
+};
+
+//Execute
+app.init();
 
 //Required data: name, email, password
 app.post('/register', (req, res) => {
