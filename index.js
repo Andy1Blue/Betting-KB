@@ -18,6 +18,9 @@ const workers = require('./lib/workers');
 
 // let session = [];
 
+// Admin routes
+//require('./lib/admin/routes')(app);
+
 app.use(cors());
 app.use(express.static('public'));
 
@@ -328,8 +331,5 @@ app.get('/test/:id', (req, res) => {
       res.end()
     })
 });
-
-// Admin routes
-require('./lib/admin/routes')(app);
 
 app.listen(config.port, () => console.log(`BETTING application starting on port: ${config.port}!`));
