@@ -7,7 +7,6 @@
 //Dependencies
 const server = require('./lib/server');
 const workers = require('./lib/workers');
-//const reactServer = require('./lib/react')
 
 //Declare the app
 const app = {};
@@ -16,7 +15,6 @@ const app = {};
 app.init = () => {
   //Start the server
   server.init();
-  // reactServer.init();
 
   //Start the workers
   workers.init();
