@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import logo from '../../assets/logo.png';
 import './App.css';
 import Footer from '../Footer';
+import Main from '../Main';
 
 class App extends Component {
   render() {
@@ -16,7 +17,7 @@ class App extends Component {
             Bet your match
             </h2>
         </div>
-
+          <Main/>
         <div>
           <Footer/>
         </div>
