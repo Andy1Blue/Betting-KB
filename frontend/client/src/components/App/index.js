@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import logo from '../../assets/logo.png';
 import './App.css';
+import Footer from '../Footer';
 
 class App extends Component {
   render() {
@@ -17,7 +18,7 @@ class App extends Component {
         </div>
 
         <div>
-
+          <Footer/>
         </div>
       </div>
     );
