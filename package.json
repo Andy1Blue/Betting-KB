@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index",
     "react": "npm start --prefix ./frontend/client",
-    "dev": "concurrently \"npm run start\" \"npm run react\""
+    "dev": "concurrently \"npm run start\" \"npm run react\"",
+    "nodemon": "nodemon ./server.js localhost 3322"
   },
   "author": "pkopy & kbujak",
   "license": "ISC",
@@ -17,6 +18,7 @@
     "ejs": "^2.6.1",
     "express": "^4.16.4",
     "mysql": "^2.16.0",
-    "nodemailer": "^4.6.8"
+    "nodemailer": "^4.6.8",
+    "nodemon": "^1.18.10"
   }
 }
