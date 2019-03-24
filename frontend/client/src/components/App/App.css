@@ -41,3 +41,23 @@ h2 {
 .App-link {
   color: #61dafb;
 }
+
+.App-navigation {
+  position: absolute;
+  margin:0;
+  top:0;
+  right:0;
+}
+
+.App-navigation li {
+  float: left;
+  list-style-type: none;
+  margin: 10px;
+}
+
+.App-navigation li
+a:hover,
+a:link,
+a:visited {
+  color: #fff;
+}

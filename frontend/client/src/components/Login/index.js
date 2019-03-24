@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import serializeForm from 'form-serialize';
 import './style.css';
-import {Redirect} from 'react-router-dom';
-import LoginData from '../../Services/LoginData';
-import authorizationToken from '../../Utils/authorizationToken';
+// import {Redirect} from 'react-router-dom';
+import LoginData from '../../services/LoginData';
+import authorizationToken from '../../utils/authorizationToken';
 
 class Login extends Component {
   constructor(props) {
@@ -58,7 +58,7 @@ class Login extends Component {
           <p>Password:</p>
           <input type="password" name="password"/><br/>
           <button>Login</button>
-            {this.state.error != null && <p>{this.state.error}</p>}
+            {<p>{this.state.error}</p>}
         </form>
       </div>
     </div>

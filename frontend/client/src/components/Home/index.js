@@ -1,13 +1,19 @@
 import React, { Component } from 'react';
 // import { Redirect } from 'react-router-dom';
-import getBet from '../../Utils/getBet';
+import getBet from '../../utils/getBet';
+import showDate from '../../utils/showDate';
+import deleteBet from '../../utils/deleteBet';
 import Loader from '../Loader';
 
 class Home extends Component {
-  state = {
+  constructor(props) {
+    super(props);
+  this.state = {
       show: null,
       isFetching: true,
       isLogin: false
+}
+this.delete = this.delete.bind(this);
 }
 
   componentWillMount() {
@@ -19,17 +25,32 @@ class Home extends Component {
 }
 }
 
+delete(id) {
+  if(id){
+  deleteBet(this.props.token.id, this.props.token.email, id).then((result) => {
+    alert("Deleted!");
+    window.location.href = "/";
+  });
+  }
+}
+
   render() {
     const {show, isFetching, isLogin} = this.state;
     return (
         <div className="App-home">
          <h1>Home</h1>
-         <div className="user_bet">
+         <div className="user-bet">
+            {!isLogin && <h2>Login or Signup to show your data!</h2>}
             {isLogin && isFetching && <Loader />}
-            {isLogin && show != null && !isFetching && <div><h2>Your last bet:</h2>
-              <ul>Bet: {show[0].bet}</ul>
-              <ul>Match: {show[0].id_match}</ul>
-              <ul>Date: {show[0].date}</ul>
+            {isLogin && show != null && !isFetching &&
+              <div className="last-bet">
+                <b>Your last bet:</b>
+                <ul>
+                  <li>Bet: {show[0].bet}</li>
+                  <li>Match: {show[0].id_match}</li>
+                  <li>Date: {showDate(show[0].date)}</li>
+                  <li><button type="submit" onClick={() => { this.delete(show[0].id) }}>DELETE</button></li>
+                  </ul>
               </div>}
           </div>
         </div>

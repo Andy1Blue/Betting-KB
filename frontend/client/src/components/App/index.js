@@ -7,7 +7,7 @@ import Footer from '../Footer';
 import Login from '../Login';
 import Home from '../Home';
 import SignUp from '../SignUp';
-import {Redirect} from 'react-router-dom';
+// import {Redirect} from 'react-router-dom';
 // import authorizationToken from '../../Utils/authorizationToken';
 
 class App extends Component {
