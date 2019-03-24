@@ -8,6 +8,7 @@
     "start": "node index",
     "react": "npm start --prefix ./frontend/client",
     "dev": "concurrently \"npm run start\" \"npm run react\"",
+    "dev-nodemon": "concurrently \"npm run nodemon\" \"npm run react\"",
     "nodemon": "nodemon ./server.js localhost 3322"
   },
   "author": "pkopy & kbujak",

@@ -1,0 +1,15 @@
+.loader {
+    width: 40px;
+}
+
+.contentLoader {
+    margin: 10px;
+}
+
+small {
+  font-size: 10px;
+}
+
+.loaderText {
+  animation: null;
+}

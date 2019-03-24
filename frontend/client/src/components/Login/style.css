@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,600,700,800,900');
+
+.App-login {
+  padding: 20px;
+  margin: 10px;
+}
+
+.Login-form {
+  width: 400px;
+  border: 1px solid #000;
+  text-align: center;
+  padding: 10px;
+}
+
+.Login-form input[type=text],
+.Login-form input[type=password] {
+  font-family: 'Montserrat', sans-serif;
+  border: 1px solid #000;
+  border-radius: 10px;
+  width: 150px;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.Login-form button {
+  font-family: 'Montserrat', sans-serif;
+  margin: 20px;
+  border: 1px solid #000;
+  border-radius: 10px;
+  width: 100px;
+  padding: 2px;
+  font-size: 16px;
+}
