@@ -40,11 +40,11 @@ delete(id) {
         <div className="App-home">
          <h1>Home</h1>
          <div className="user-bet">
+            {!isLogin && <h2>Login or Signup to show your data!</h2>}
             {isLogin && isFetching && <Loader />}
             {isLogin && show != null && !isFetching &&
               <div className="last-bet">
                 <b>Your last bet:</b>
-
                 <ul>
                   <li>Bet: {show[0].bet}</li>
                   <li>Match: {show[0].id_match}</li>
