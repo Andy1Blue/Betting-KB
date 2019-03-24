@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import serializeForm from 'form-serialize';
 import './style.css';
 // import {Redirect} from 'react-router-dom';
-import Register from '../../Services/Register';
-import authorizationToken from '../../Utils/authorizationToken';
+import Register from '../../services/Register';
+import authorizationToken from '../../utils/authorizationToken';
 
 class SignUp extends Component {
   registerUser = (e) => {
