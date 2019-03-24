@@ -1,34 +1,17 @@
 import React, { Component } from 'react';
 import serializeForm from 'form-serialize';
 import './style.css';
-import {Redirect} from 'react-router-dom';
-import LoginData from '../../Services/LoginData';
+// import {Redirect} from 'react-router-dom';
+import Register from '../../Services/Register';
 import authorizationToken from '../../Utils/authorizationToken';
 
-class Login extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      error: null,
-      isLogin: false,
-      token: {}
-    }
-  }
-
-  componentWillMount() {
-    if(sessionStorage.getItem('token')) {
-      this.setState({isLogin: true});
-    } else {
-      this.setState({isLogin: false});
-    }
-  }
-
-  loginUser = (e) => {
+class SignUp extends Component {
+  registerUser = (e) => {
      e.preventDefault();
      const values = serializeForm(e.target, {hash: true});
      const email = /[\w+0-9._%+-]+@[\w+0-9.-]+\.[\w+]{2,3}/.test(values.email.trim())
      if(email) {
-       LoginData(values).then((result) => {
+       Register(values).then((result) => {
          if(result.Error) {
            this.setState({isLogin: false, error: result.Error});
          }
@@ -42,31 +25,25 @@ class Login extends Component {
    };
 
   render() {
-    if(this.state.isLogin) {
-      window.location.href = "/";
-    }
-
-    const {error, isLogin} = this.state;
     return (
       <div>
-      {this.state.isLogin === false &&
-    <div className="App-login">
-      <div className="Login-form" hidden={isLogin}>
-        <form method="POST" onSubmit={this.loginUser}>
+    <div className="App-register">
+      <div className="Register-form">
+        <form method="POST" onSubmit={this.registerUser}>
+          <p>Name:</p>
+          <input type="text" name="name"/><br/>
           <p>Email:</p>
           <input type="text" name="email"/><br/>
           <p>Password:</p>
           <input type="password" name="password"/><br/>
-          <button>Login</button>
-            {this.state.error != null && <p>{this.state.error}</p>}
+          <button>Register</button>
         </form>
       </div>
     </div>
-  }
   </div>
   )
 }
 
 }
 
-export default Login;
+export default SignUp;
