@@ -1,16 +1,10 @@
 import React, { Component } from 'react';
-// import { Redirect } from 'react-router-dom';
-import deleteBet from '../../utils/deleteBet';
-import BetsList from '../Bets/BetsList';
+// import deleteBet from '../../utils/deleteBet';
 
 class Home extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isLogin: false,
-      token: this.props.token
-    }
-    this.delete = this.delete.bind(this);
+  state = {
+    isLogin: false,
+    token: this.props.token
   }
 
   componentWillMount() {
@@ -19,17 +13,17 @@ class Home extends Component {
     }
   }
 
-  delete(id) {
-    if (id) {
-      deleteBet(this.props.token.id, this.props.token.email, id).then((result) => {
-        alert("Deleted!");
-        window.location.href = "/";
-      });
-    }
-  }
+  // delete(id) {
+  //   if (id) {
+  //     deleteBet(this.props.token.id, this.props.token.email, id).then((result) => {
+  //       alert("Deleted!");
+  //       window.location.href = "/";
+  //     });
+  //   }
+  // }
 
   render() {
-    const { isLogin, token } = this.state;
+    const { isLogin } = this.state;
     return (
       <div className="App-home">
         <h1>Home</h1>
@@ -37,8 +31,7 @@ class Home extends Component {
           {!isLogin && <h2>Login or Signup to show your data!</h2>}
           {isLogin &&
             <div className="last-bet">
-              <b>Your bets:</b>
-              <BetsList token={token} />
+              <p><b>Hello!</b></p>
             </div>
           }
         </div>

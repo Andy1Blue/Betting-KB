@@ -7,6 +7,7 @@ import Footer from '../Footer';
 import Login from '../Login';
 import Home from '../Home';
 import SignUp from '../SignUp';
+import MyBets from '../Bets/MyBets';
 // import {Redirect} from 'react-router-dom';
 // import authorizationToken from '../../Utils/authorizationToken';
 
@@ -60,6 +61,7 @@ class App extends Component {
                 {isLogin && <li><b>Welcome: {token.email}</b></li>}
                 <li>
                   <Link to="/">Home</Link>
+                  <Link to="/mybets">My Bets</Link>
                 </li>
                 {!isLogin && <li><Link to="/login">Login</Link></li>}
                 {!isLogin && <li><Link to="/signup">Signup</Link></li>}
@@ -75,6 +77,11 @@ class App extends Component {
           )} />
           <Route path="/login" component={Login} />
           <Route path="/signup" component={SignUp} />
+          <Route path="/mybets" render={() => (
+            <MyBets
+              token={this.state.token}
+            />
+          )} />
 
           <Footer />
         </div>
