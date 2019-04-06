@@ -3,13 +3,12 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import logo from '../../assets/logo.png';
 import './App.css';
 import Footer from '../Footer';
-// import Main from '../Main';
 import Login from '../Login';
 import Home from '../Home';
 import SignUp from '../SignUp';
 import MyBets from '../Bets/MyBets';
-// import {Redirect} from 'react-router-dom';
-// import authorizationToken from '../../Utils/authorizationToken';
+import User from '../User';
+import Matches from '../Matches';
 
 class App extends Component {
   constructor(props) {
@@ -58,14 +57,19 @@ class App extends Component {
 
             <div className="App-navigation">
               <ul>
-                {isLogin && <li><b>Welcome: {token.email}</b></li>}
-                <li>
-                  <Link to="/">Home</Link>
-                  <Link to="/mybets">My Bets</Link>
-                </li>
-                {!isLogin && <li><Link to="/login">Login</Link></li>}
-                {!isLogin && <li><Link to="/signup">Signup</Link></li>}
-                {isLogin && <li><button onClick={this.logout}>Logout</button></li>}
+                {isLogin &&
+                  <div>
+                    <li><Link to="/">Home</Link></li>
+                    <li><Link to="/mybets">My Bets</Link></li>
+                    <li><Link to="/matches">Matches</Link></li>
+                    <li><b>Welcome: {token.email}</b> (<Link to="/user">User</Link> | <a href="/" onClick={this.logout}>Logout</a>)</li>
+                  </div>}
+
+                {!isLogin &&
+                  <div>
+                    <li><Link to="/login">Login</Link></li>
+                    <li><Link to="/signup">Signup</Link></li>
+                  </div>}
               </ul>
             </div>
           </div>
@@ -79,6 +83,16 @@ class App extends Component {
           <Route path="/signup" component={SignUp} />
           <Route path="/mybets" render={() => (
             <MyBets
+              token={this.state.token}
+            />
+          )} />
+          <Route path="/user" render={() => (
+            <User
+              token={this.state.token}
+            />
+          )} />
+          <Route path="/matches" render={() => (
+            <Matches
               token={this.state.token}
             />
           )} />

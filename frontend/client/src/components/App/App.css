@@ -50,6 +50,7 @@ h2 {
 }
 
 .App-navigation li {
+  font-size: 14px;
   float: left;
   list-style-type: none;
   margin: 10px;
