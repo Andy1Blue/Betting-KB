@@ -11,7 +11,8 @@ class Home extends Component {
     this.state = {
       show: null,
       isFetching: true,
-      isLogin: false
+      isLogin: false,
+      token: this.props.token
     }
     this.delete = this.delete.bind(this);
   }
@@ -36,26 +37,30 @@ class Home extends Component {
   }
 
   render() {
-    const { show, isFetching, isLogin } = this.state;
+    const { show, isFetching, isLogin, token } = this.state;
     return (
       <div className="App-home">
         <h1>Home</h1>
         <div className="user-bet">
           {!isLogin && <h2>Login or Signup to show your data!</h2>}
           {isLogin && isFetching && <Loader />}
-          {isLogin && show != null && !isFetching &&
+          {isLogin && show !== null && !isFetching &&
             <div className="last-bet">
               <b>Your bets:</b>
               <ul>
                 {show.map(shows =>
-                  <BetItem bets={shows} />
+                  <BetItem 
+                  bets={shows} 
+                  token={this.state.token} 
+                  id={shows.id}
+                  key={shows.id} />
                 )}
               </ul>
             </div>
           }
         </div>
       </div>
-    );
+    )
   }
 }
 
