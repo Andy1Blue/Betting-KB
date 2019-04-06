@@ -79,19 +79,19 @@ class App extends Component {
               token={this.state.token}
             />
           )} />
-          <Route path="/login" component={Login} />
-          <Route path="/signup" component={SignUp} />
-          <Route path="/mybets" render={() => (
+          <Route exact path="/login" component={Login} />
+          <Route exact path="/signup" component={SignUp} />
+          <Route exact path="/mybets" render={() => (
             <MyBets
               token={this.state.token}
             />
           )} />
-          <Route path="/user" render={() => (
+          <Route exact path="/user" render={() => (
             <User
               token={this.state.token}
             />
           )} />
-          <Route path="/matches" render={() => (
+          <Route exact path="/matches" render={() => (
             <Matches
               token={this.state.token}
             />
