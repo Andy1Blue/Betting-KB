@@ -32,12 +32,10 @@ class User extends Component {
                             {isFetching && <Loader />}
                             {!isFetching && user !== null &&
                                 <div className='user-data'>
-                                    {user.map(userData =>
                                         <ul>
-                                            <li>{userData.name}</li>
-                                            <li>{userData.email}</li>
+                                            <li>{user[0].name}</li>
+                                            <li>{user[0].email}</li>
                                         </ul>
-                                    )}
                                 </div>
                             }
                         </div>
