@@ -1,16 +1,12 @@
 import React, { Component } from 'react';
 // import { Redirect } from 'react-router-dom';
-import getBet from '../../utils/getBet';
 import deleteBet from '../../utils/deleteBet';
-import Loader from '../Loader';
-import BetItem from './../../components/BetItem';
+import BetsList from '../Bets/BetsList';
 
 class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      show: null,
-      isFetching: true,
       isLogin: false,
       token: this.props.token
     }
@@ -18,12 +14,8 @@ class Home extends Component {
   }
 
   componentWillMount() {
-    if (this.props.token.id) {
-      getBet(this.props.token.id, this.props.token.email)
-        .then((result) => {
-          console.log(result)
-          this.setState({ show: result, isFetching: false, isLogin: true })
-        });
+    if (this.state.token.id) {
+      this.setState({ isLogin: true })
     }
   }
 
@@ -37,25 +29,16 @@ class Home extends Component {
   }
 
   render() {
-    const { show, isFetching, isLogin, token } = this.state;
+    const { isLogin, token } = this.state;
     return (
       <div className="App-home">
         <h1>Home</h1>
         <div className="user-bet">
           {!isLogin && <h2>Login or Signup to show your data!</h2>}
-          {isLogin && isFetching && <Loader />}
-          {isLogin && show !== null && !isFetching &&
+          {isLogin &&
             <div className="last-bet">
               <b>Your bets:</b>
-              <ul>
-                {show.map(shows =>
-                  <BetItem 
-                  bets={shows} 
-                  token={this.state.token} 
-                  id={shows.id}
-                  key={shows.id} />
-                )}
-              </ul>
+              <BetsList token={token} />
             </div>
           }
         </div>
