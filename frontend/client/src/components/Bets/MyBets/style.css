@@ -1,0 +1,12 @@
+.itemConatiner {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+}
+
+.App-my-bets {
+  margin: 20px;
+}
