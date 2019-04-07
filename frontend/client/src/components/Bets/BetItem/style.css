@@ -1,3 +1,22 @@
-.betItem {
-    margin-top:30px;
+.item {
+  position: relative;
+  flex-grow: 5;
+  flex-basis: 200px;
+  background-color: #e9e9e9;
+  padding: 30px 10px 10px 10px;
+  margin: 10px;
+  width: 300px;
+  height: 100px;
+}
+
+.itemTask {
+  position: relative;
+  font-size: 16px;
+  margin: 5px;
+}
+
+.itemEdit {
+  position: absolute;
+  right: 10px;
+  top: 5px;
 }

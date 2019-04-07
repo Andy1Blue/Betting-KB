@@ -23,7 +23,7 @@ class BetsList extends Component {
   render() {
     const { show, token } = this.state;
     return (
-      <ul>
+      <div className='itemConatiner'>
         {show !== null &&
           show.map(shows =>
             <BetItem
@@ -32,7 +32,7 @@ class BetsList extends Component {
               id={shows.id}
               key={shows.id} />
           )}
-      </ul>)
+      </div>)
   }
 
 }

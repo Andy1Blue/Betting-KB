@@ -30,13 +30,13 @@ class BetItem extends Component {
                 {isFetching && <Loader />}
                 {!isFetching && match !== null &&
                     <div className='betItem'>
-                        <ul>
-                            <li>Bet: {bets.bet}</li>
-                            <li>Match: {match}</li>
-                            <li>Date: {showDate(bets.date)}</li>
-                            <li><Link to={`/edit/${bets.id}`}><button className='editButton'>&#9998;</button></Link></li>
-                            <li><button type="submit" onClick={() => { this.delete(bets.id) }}>DELETE</button></li>
-                        </ul>
+                        <div className='item'>
+                            <span className='itemTask'>{match} {bets.bet} {showDate(bets.date)}</span>
+                            <div className='itemEdit'>
+                                <button className='deleteButton' type="submit" onClick={() => { this.delete(bets.id) }}>&#10006;</button>
+                                <Link to={`/edit/${bets.id}`}><button className='editButton'>&#9998;</button></Link>
+                            </div>
+                        </div>
                     </div>
                 }
             </div>

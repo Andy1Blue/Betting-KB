@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 // import { Redirect } from 'react-router-dom';
 // import deleteBet from '../../../utils/deleteBet';
 import BetsList from '../../Bets/BetsList';
+import './style.css';
 
 class MyBets extends Component {
     state = {
