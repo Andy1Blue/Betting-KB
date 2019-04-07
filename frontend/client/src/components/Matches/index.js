@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import getMatch from '../../utils/getMatch';
 import Loader from '../Loader';
+import './style.css';
 
 class Matches extends Component {
     state = {
@@ -33,11 +34,13 @@ class Matches extends Component {
                             {!isFetching && matches !== null &&
                                 <div className='matches'>
                                     {matches.map(match =>
+                                        <div className='matchItem'>
                                         <ul>
                                             <li>Ihe match will start in ... hour</li>
                                             <li>{match.team_a} vs {match.team_b}</li>
                                             <li>Result: {match.result}</li>
-                                        </ul>
+                                            </ul>
+                                        </div>
                                     )}
                                 </div>
                             }
