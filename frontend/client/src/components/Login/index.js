@@ -1,3 +1,9 @@
+/*
+ * Login Component
+ *
+ */
+
+// Imports
 import React, { Component } from 'react';
 import serializeForm from 'form-serialize';
 import './style.css';

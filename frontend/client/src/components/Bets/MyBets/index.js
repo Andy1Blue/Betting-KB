@@ -1,3 +1,9 @@
+/*
+ * MyBets Component
+ *
+ */
+
+// Imports
 import React, { Component } from 'react';
 // import { Redirect } from 'react-router-dom';
 // import deleteBet from '../../../utils/deleteBet';
@@ -5,10 +11,10 @@ import BetsList from '../../Bets/BetsList';
 import './style.css';
 
 class MyBets extends Component {
-    state = {
-      isLogin: false,
-      token: this.props.token
-    }
+  state = {
+    isLogin: false,
+    token: this.props.token
+  }
 
   componentWillMount() {
     if (this.state.token.id) {
@@ -16,14 +22,14 @@ class MyBets extends Component {
     }
   }
 
-//   delete(id) {
-//     if (id) {
-//       deleteBet(this.props.token.id, this.props.token.email, id).then((result) => {
-//         alert("Deleted!");
-//         window.location.href = "/";
-//       });
-//     }
-//   }
+  //   delete(id) {
+  //     if (id) {
+  //       deleteBet(this.props.token.id, this.props.token.email, id).then((result) => {
+  //         alert("Deleted!");
+  //         window.location.href = "/";
+  //       });
+  //     }
+  //   }
 
   render() {
     const { isLogin, token } = this.state;

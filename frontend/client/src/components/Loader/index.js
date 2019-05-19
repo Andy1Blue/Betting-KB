@@ -1,3 +1,9 @@
+/*
+ * Loader Component
+ *
+ */
+
+// Imports
 import React from 'react';
 import loaderSrc from '../../assets/loader.gif';
 import './style.css';

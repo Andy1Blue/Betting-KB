@@ -1,3 +1,8 @@
+/*
+ * LoginData service
+ *
+ */
+
 export default function LoginData(values) {
   return new Promise((resolve, reject) => {
     fetch('http://localhost:3322/login',{

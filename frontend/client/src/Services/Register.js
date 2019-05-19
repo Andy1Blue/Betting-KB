@@ -1,3 +1,8 @@
+/*
+ * Register service
+ *
+ */
+
 export default function Register(values) {
   return new Promise((resolve, reject) => {
     fetch('http://localhost:3322/register',{
