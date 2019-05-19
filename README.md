@@ -1,4 +1,4 @@
-﻿Betting
+﻿﻿Betting
 ====
 
 Introduction
@@ -15,4 +15,5 @@ Libraries and technologies used in the project:
 ## Authors
 
 __Krzysztof Bujak__ - [Krzysztof Bujak](https://github.com/Andy1Blue)
+
 __Paweł Kopycki__ - [Paweł Kopycki](https://github.com/pkopy)
