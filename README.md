@@ -3,14 +3,20 @@
 
 Introduction
 ----
-Bookmaker management system.
+Bookmaker management system. 
+The project is under development.
 
 Technologies and libraries
 ----
 Libraries and technologies used in the project:
 - Node.js
 - [React.js](https://facebook.github.io/react/)
-- [Bootstrap](https://v4-alpha.getbootstrap.com)
+
+Planned implementations
+----
+* Implement [Bootstrap](https://v4-alpha.getbootstrap.com)
+* Log system
+* Code optimization (functions) 
 
 ## Authors
 
