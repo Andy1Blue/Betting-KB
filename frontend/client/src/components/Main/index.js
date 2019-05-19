@@ -1,3 +1,9 @@
+/*
+ * Main Component
+ *
+ */
+
+// Imports
 import React, { Component } from 'react';
 
 class Main extends Component {

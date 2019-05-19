@@ -1,3 +1,9 @@
+/*
+ * Home Component
+ *
+ */
+
+// Imports
 import React, { Component } from 'react';
 // import deleteBet from '../../utils/deleteBet';
 

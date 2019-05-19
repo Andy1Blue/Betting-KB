@@ -1,3 +1,9 @@
+/*
+ * User Component
+ *
+ */
+
+// Imports
 import React, { Component } from 'react';
 import getUser from '../../utils/getUser';
 import Loader from '../Loader';

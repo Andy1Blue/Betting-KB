@@ -1,3 +1,9 @@
+/*
+ * BetsList Component 
+ *
+ */
+
+// Imports
 import React, { Component } from 'react';
 import getBet from '../../../utils/getBet';
 import BetItem from '../BetItem';
@@ -36,6 +42,5 @@ class BetsList extends Component {
   }
 
 }
-
 
 export default BetsList;
